@@ -23,3 +23,12 @@ jobs:
     # Runs a single command using the runners shell
     - name: build docker compose
       run: docker-compose up -d
+    services: 
+      backend-db:
+        image: postgres:12.1
+        env:
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: backend_db
+        ports:
+          - 5432:5432

@@ -28,6 +28,8 @@ jobs:
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         version: '290.0.1'
+        service_account_key: ${{ secrets.GKE_SA_KEY }}
+
     # Configure Docker to use the gcloud command-line tool as a credential
     # helper for authentication
     - run: |-

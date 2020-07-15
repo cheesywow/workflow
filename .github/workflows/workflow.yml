@@ -44,7 +44,7 @@ jobs:
       run: |-
         # kubectl create -f px-repl3-sc.yaml
         kubectl get sc
-        kubectl create -f px-postgres-pvc.yaml
+        # kubectl create -f px-postgres-pvc.yaml
         kubectl get pvc
         kubectl create -f postgres-app.yaml  
     

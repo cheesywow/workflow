@@ -40,18 +40,18 @@ jobs:
         gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
     
     
-    - name: postgresql
-      run: |-
-        # kubectl create -f px-repl3-sc.yaml
-        kubectl get sc
-        # kubectl create -f px-postgres-pvc.yaml
-        kubectl get pvc
-        kubectl create -f postgres-app.yaml  
-    
     # Build the Docker image
-    - name: Build
+    - name: Build celeryworker
+      run: |-
+        docker build --tag "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" ./backend/celeryworker.dockerfile 
+    - name: Build backend
+      run: |-
+        docker build --tag "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" ./backend/backend.dockerfile
+    - name: Build frontend
       run: |-
         docker build --tag "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" ./frontend 
+   
+    
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |-

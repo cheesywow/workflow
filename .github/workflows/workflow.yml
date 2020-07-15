@@ -41,12 +41,13 @@ jobs:
     
     
     # Build the Docker image 
-    - name: Build celeryworker
-      run: |-
-        docker build --tag "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" - < ./backend/celeryworker.dockerfile 
     - name: Build backend
       run: |-
         docker build --tag "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" - < ./backend/backend.dockerfile
+
+    - name: Build celeryworker
+      run: |-
+        docker build --tag "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" - < ./backend/celeryworker.dockerfile 
     - name: Build frontend
       run: |-
         docker build --tag "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" ./frontend 

@@ -21,18 +21,7 @@ spec:
           imagePullPolicy: "Always"
           ports:
             - containerPort: 5432
-          env:
-            - name: POSTGRES_USER
-              value: a
-            - name: PGUSER
-              value: a
-            - name: POSTGRES_PASSWORD
-              value: tom
-            - PGDATA:
-              value: /var/lib/postgresql/data/pgdata
-            volumeMounts:
-              - mountPath: /var/lib/postgresql/data
-                name: postgredb
+          
           volumes:
             - name: postgredb
               persistentVolumeClaim:

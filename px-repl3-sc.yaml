@@ -3,5 +3,3 @@ kind: StorageClass
 metadata:
   name: px-repl3-sc
 provisioner: kubernetes.io/portworx-volume
-parameters:
-  repl: 3

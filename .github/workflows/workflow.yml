@@ -41,8 +41,6 @@ jobs:
     
     - name: Set up postgres
       run: |-
-        # kubectl create -f postgres-configmap.yaml 
-        # kubectl create -f postgres-storage.yaml
         kubectl create -f deployment-postgres.yml 
         kubectl create -f postgres-service.yaml 
          

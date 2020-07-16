@@ -5,4 +5,4 @@ resources:
   - deployment-backendtasks.yml
   - deployment-backend.yml
   - deployment-postgres.yml
-  
+  - postgres-service.yaml

@@ -23,15 +23,4 @@ spec:
             requests:
               cpu: 100m
             limits:
-              cpu: 100m
-      containers:
-        - name: backend
-          image: gcr.io/workflow-283323/static-site:backend
-          ports:
-            - containerPort: 3000
-          resources:
-            requests:
-              cpu: 100m
-            limits:
-              cpu: 100m
-              
+              cpu: 100m              

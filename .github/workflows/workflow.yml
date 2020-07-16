@@ -43,14 +43,14 @@ jobs:
     # Build the Docker image 
     - name: Build backend
       run: |-
-        docker build --tag "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" -f ./backend/backend.dockerfile ./backend
+        docker build --tag "gcr.io/$PROJECT_ID/$IMAGE:backend" --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" -f ./backend/backend.dockerfile ./backend
 
     - name: Build celeryworker
       run: |-
-        docker build --tag "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" -f ./backend/celeryworker.dockerfile ./backend 
+        docker build --tag "gcr.io/$PROJECT_ID/$IMAGE:worker" --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" -f ./backend/celeryworker.dockerfile ./backend 
     - name: Build frontend
       run: |-
-        docker build --tag "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" ./frontend 
+        docker build --tag "gcr.io/$PROJECT_ID/$IMAGE:frontend" --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" ./frontend 
    
     
     # Push the Docker image to Google Container Registry

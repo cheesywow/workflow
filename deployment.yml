@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: gke-test
 spec:
-  replicas: 2
+  replicas: 1
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -23,4 +23,5 @@ spec:
             requests:
               cpu: 100m
             limits:
-              cpu: 100m              
+              cpu: "1"
+              memory: "512Mi"

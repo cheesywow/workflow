@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: gcr.io/workflow-283323/frontend
+          image: gcr.io/workflow-283323/static-site:frontend	
           ports:
             - containerPort: 5000
           resources:
@@ -26,7 +26,7 @@ spec:
               cpu: 100m
       containers:
         - name: backend
-          image: gcr.io/workflow-283323/backend
+          image: gcr.io/workflow-283323/static-site:backend
           ports:
             - containerPort: 3000
           resources:
@@ -37,7 +37,7 @@ spec:
               
       containers:
         - name: worker
-          image: gcr.io/workflow-283323/worker
+          image: gcr.io/workflow-283323/static-site:worker
           ports:
             - containerPort: 6969
           resources:

@@ -1,7 +1,7 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: backend_tasks
+  name: backend-tasks
 spec:
   replicas: 1
   strategy:
@@ -12,10 +12,10 @@ spec:
   template:
     metadata:
       labels:
-        app: backend_tasts
+        app: backend-tasts
     spec:
       containers:
-        - name: backend_tasks
+        - name: backend-tasks
           image: gcr.io/workflow-283323/static-site:worker	
           ports:
             - containerPort: 5555

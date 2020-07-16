@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: gke-test
 spec:
-  replicas: 1
+  replicas: 2
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -15,10 +15,31 @@ spec:
         app: gke-test
     spec:
       containers:
-        - name: gke-test
-          image: gcr.io/PROJECT_ID/IMAGE:TAG
+        - name: frontend
+          image: gcr.io/PROJECT_ID/IMAGE:frontend
           ports:
             - containerPort: 5000
+          resources:
+            requests:
+              cpu: 100m
+            limits:
+              cpu: 100m
+      containers:
+        - name: backend
+          image: gcr.io/PROJECT_ID/IMAGE:backend
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: 100m
+            limits:
+              cpu: 100m
+              
+      containers:
+        - name: worker
+          image: gcr.io/PROJECT_ID/IMAGE:worker
+          ports:
+            - containerPort: 6969
           resources:
             requests:
               cpu: 100m

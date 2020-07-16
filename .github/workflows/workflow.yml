@@ -39,7 +39,13 @@ jobs:
     - run: |-
         gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
     
-    
+    - name: Set up postgres
+      run: |-
+        kubectl create -f postgres-configmap.yaml 
+        kubectl create -f postgres-storage.yaml
+        kubectl create -f postgres-deployment.yaml 
+        kubectl create -f postgres-service.yaml 
+         
     # Build the Docker image 
     - name: Build backend
       run: |-
@@ -64,6 +70,7 @@ jobs:
       run: |-
         curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
         chmod u+x ./kustomize
+
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-

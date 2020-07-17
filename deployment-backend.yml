@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: gcr.io/workflow-283600/static-site:backend:latest	
+          image: gcr.io/workflow-283600/static-site:backend
           ports:
             - containerPort: 5050
           resources:

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: gcr.io/workflow-283323/static-site:frontend	
+          image: gcr.io/workflow-283600/static-site:frontend	
           ports:
             - containerPort: 5000
           resources:

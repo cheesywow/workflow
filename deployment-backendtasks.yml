@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: backend-tasks
-          image: gcr.io/workflow-283323/static-site:worker	
+          image: gcr.io/workflow-283600/static-site:worker	
           ports:
             - containerPort: 5555
           resources:

@@ -73,6 +73,8 @@ jobs:
         ./kustomize edit set image gcr.io/PROJECT_ID/IMAGE:TAG=gcr.io/$PROJECT_ID/$IMAGE:frontend
         ./kustomize build . | kubectl apply -f -
         kubectl rollout status deployment/frontend
+        kubectl rollout status deployment/backend
+        kubectl rollout status deployment/backend-tasks
         kubectl get services -o wide
       
 

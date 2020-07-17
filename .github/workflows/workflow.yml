@@ -38,14 +38,7 @@ jobs:
     # Get the GKE credentials so we can deploy to the cluster
     - run: |-
         gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
-        
-    - name: postgres
-      run: |-
-        kubectl create -f postgres-configmap.yaml 
-        kubectl create -f postgres-storage.yaml
-        kubectl create -f deployment-postgres.yml
-        kubectl create -f postgres-service.yaml  
-        
+                
     # Build the Docker image 
     - name: Build backend
       run: |-

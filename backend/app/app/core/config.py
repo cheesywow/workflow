@@ -37,7 +37,7 @@ class Settings(BaseSettings):
     POSTGRES_USER: str = "postgresadmin"
     POSTGRES_PASSWORD: str = "admin123"
     POSTGRES_DB: str = "postgresdb"
-    SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = ""
+    SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = "postgres://user:pass@localhost:5432/app"
 
     @validator("SQLALCHEMY_DATABASE_URI", pre=True)
     def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:

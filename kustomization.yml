@@ -4,5 +4,3 @@ resources:
   - deployment-frontend.yml
   - deployment-backendtasks.yml
   - deployment-backend.yml
-  - postgres-service.yaml
-  - deployment-postgres.yml

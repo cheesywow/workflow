@@ -48,8 +48,7 @@ jobs:
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
-        kubectl delete service postgres 
-        kubectl delete deployment postgre
+        kubectl delete deployment postgres
         kubectl delete persistentvolumeclaim postgres-pv-claim
         kubectl delete persistentvolume postgres-pv-volume
         kubectl create -f postgres-storage.yaml 

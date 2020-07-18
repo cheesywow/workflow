@@ -11,8 +11,6 @@ spec:
     storage: 5Gi
   accessModes:
     - ReadWriteOnce
-  hostPath:
-    path: "/mnt/data"
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1

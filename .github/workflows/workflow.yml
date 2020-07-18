@@ -52,6 +52,7 @@ jobs:
         kubectl delete deployment postgre
         kubectl delete persistentvolumeclaim postgres-pv-claim
         kubectl delete persistentvolume postgres-pv-volume
+        kubectl create -f postgres-storage.yaml 
         ./kustomize build . | kubectl apply -f -
         kubectl rollout status deployment/postgres
         kubectl get services -o wide

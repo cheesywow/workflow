@@ -11,9 +11,9 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: gcr.io/workflow-283600/static-site:postgres	
+          image:  postgres:12
           ports:
-            - containerPort: 5432
+            - containerPort: 5050
           envFrom:
             - configMapRef:
                 name: postgres-config

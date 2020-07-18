@@ -35,11 +35,7 @@ jobs:
     # helper for authentication
     - run: |-
         gcloud --quiet auth configure-docker
-        
-    - name: Build postgres dockerfile
-      run: |-
-        docker build --tag "gcr.io/$PROJECT_ID/$IMAGE:postgres" --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" -f postgres.dockerfile . 
-   
+
     # Get the GKE credentials so we can deploy to the cluster
     - run: |-
         gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
@@ -56,6 +52,10 @@ jobs:
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
+        kubectl delete service postgres 
+        kubectl delete deployment postgre
+        kubectl delete persistentvolumeclaim postgres-pv-claim
+        kubectl delete persistentvolume postgres-pv-volume
         ./kustomize build . | kubectl apply -f -
         kubectl rollout status deployment/postgres
         kubectl get services -o wide

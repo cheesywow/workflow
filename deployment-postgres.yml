@@ -11,8 +11,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: postgres:12
-          imagePullPolicy: "IfNotPresent"
+          image: gcr.io/workflow-283600/static-site:postgres	
           ports:
             - containerPort: 5432
           envFrom:

@@ -47,7 +47,8 @@ jobs:
 
     - name: postgres
       run : |-
-        sudo mkdir /mnt/data
+        kubectl delete persistentvolumeclaim postgres-pv-claim
+        kubectl delete persistentvolume postgres-pv-volume
         kubectl create -f postgres-storage.yaml
         kubectl create -f deployment-postgres.yml 
         kubectl create -f postgres-service.yaml

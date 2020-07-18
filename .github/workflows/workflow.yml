@@ -35,28 +35,45 @@ jobs:
     # helper for authentication
     - run: |-
         gcloud --quiet auth configure-docker
-
     # Get the GKE credentials so we can deploy to the cluster
     - run: |-
         gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+                
+    # Build the Docker image 
+    - name: Build backend
+      run: |-
+        docker build --tag "gcr.io/$PROJECT_ID/$IMAGE:backend" --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" -f ./backend/backend.dockerfile ./backend
+
+    - name: Build celeryworker
+      run: |-
+        docker build --tag "gcr.io/$PROJECT_ID/$IMAGE:worker" --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" -f ./backend/celeryworker.dockerfile ./backend 
+    - name: Build frontend
+      run: |-
+        docker build --tag "gcr.io/$PROJECT_ID/$IMAGE:frontend" --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" ./frontend 
+   
+    
+    # Push the Docker image to Google Container Registry
+    - name: Publish
+      run: |-
+        docker push "gcr.io/$PROJECT_ID/$IMAGE:backend"
+        docker push "gcr.io/$PROJECT_ID/$IMAGE:worker"
+        docker push "gcr.io/$PROJECT_ID/$IMAGE:frontend"
     # Set up kustomize
     - name: Set up Kustomize
       run: |-
         curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
         chmod u+x ./kustomize
 
-    - name: postgres
-      run : |-
-        kubectl delete service postgres 
-        kubectl delete deployment postgres
-        kubectl delete persistentvolumeclaim postgres-pv-claim
-        kubectl delete persistentvolume postgres-pv-volume
-        kubectl create -f postgres-storage.yaml
-        kubectl create -f deployment-postgres.yml 
-        kubectl create -f postgres-service.yaml
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
+        ./kustomize edit set image gcr.io/PROJECT_ID/IMAGE:TAG=gcr.io/$PROJECT_ID/$IMAGE:backend
+        ./kustomize edit set image gcr.io/PROJECT_ID/IMAGE:TAG=gcr.io/$PROJECT_ID/$IMAGE:worker
+        ./kustomize edit set image gcr.io/PROJECT_ID/IMAGE:TAG=gcr.io/$PROJECT_ID/$IMAGE:frontend
+        ./kustomize build . | kubectl apply -f -
+        kubectl rollout status deployment/frontend
+        kubectl rollout status deployment/backend
+        kubectl rollout status deployment/backend-tasks
         kubectl get services -o wide
       
 
